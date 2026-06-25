@@ -6,6 +6,7 @@ import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Experience } from '@/components/sections/Experience'
 import { Projects } from '@/components/sections/Projects'
+import { Skills } from '@/components/sections/Skills'
 
 export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false)
@@ -18,6 +19,7 @@ export default function Home() {
       <About />
       <Experience />
       <Projects />
+      <Skills />
       {/* Sections added in subsequent tasks */}
     </main>
   )
