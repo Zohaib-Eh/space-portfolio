@@ -15,11 +15,13 @@ export default function Home() {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === '`') setTerminalOpen(o => !o)
+      if (e.key === '`' && !terminalOpen) {
+        setTerminalOpen(true)
+      }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [])
+  }, [terminalOpen])
 
   return (
     <main>
