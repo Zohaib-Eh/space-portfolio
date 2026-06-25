@@ -1,0 +1,15 @@
+OG Image Placeholder
+====================
+
+Replace this file with a real `public/og-image.png` (1200 × 630 px) before deploying.
+
+The og-image.png is referenced in app/layout.tsx under openGraph.images and will be
+shown when your portfolio link is shared on social media (Twitter/X, LinkedIn, Discord, etc.).
+
+Recommended tools for creating an OG image:
+- Figma (export at 1200x630)
+- og-image.vercel.app
+- satori (programmatic via Next.js /api/og route)
+- Canva (custom dimensions: 1200 x 630)
+
+Once you have the image, place it at: public/og-image.png
