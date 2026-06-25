@@ -4,6 +4,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { PlanetTracker } from '@/components/ui/PlanetTracker'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
+import { Experience } from '@/components/sections/Experience'
 
 export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false)
@@ -14,6 +15,7 @@ export default function Home() {
       <PlanetTracker />
       <Hero onOpenTerminal={() => setTerminalOpen(true)} />
       <About />
+      <Experience />
       {/* Sections added in subsequent tasks */}
     </main>
   )
