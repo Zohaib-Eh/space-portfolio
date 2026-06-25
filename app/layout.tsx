@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google'
+import { ThemeInjector } from '@/components/ui/ThemeInjector'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
-      <body className="font-sans bg-bg text-white">{children}</body>
+      <body className="font-sans bg-bg text-white">
+        <ThemeInjector />
+        {children}
+      </body>
     </html>
   )
 }
