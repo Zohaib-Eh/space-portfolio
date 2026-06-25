@@ -1,5 +1,6 @@
 'use client'
 import { NeuralNetwork } from '@/components/experience/NeuralNetwork'
+import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
 
 export function Experience() {
   return (
@@ -13,6 +14,9 @@ export function Experience() {
           click any node to explore
         </p>
         <NeuralNetwork />
+        <div className="mt-12">
+          <PuzzleSlot planetId="venus" />
+        </div>
       </div>
     </section>
   )

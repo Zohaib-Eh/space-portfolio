@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
 
 export function About() {
   const ref = useRef(null)
@@ -51,6 +52,9 @@ export function About() {
               </a>
             </div>
           </div>
+        </div>
+        <div className="mt-12">
+          <PuzzleSlot planetId="mercury" />
         </div>
       </motion.div>
     </section>

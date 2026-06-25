@@ -1,5 +1,6 @@
 'use client'
 import { PhysicsIcons } from '@/components/skills/PhysicsIcons'
+import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
 
 export function Skills() {
   return (
@@ -9,6 +10,9 @@ export function Skills() {
         <h2 className="font-serif text-4xl md:text-5xl font-bold mb-16 text-center">Skills</h2>
         <PhysicsIcons />
         <p className="text-white/20 text-xs text-center mt-4">hover to interact</p>
+        <div className="mt-12">
+          <PuzzleSlot planetId="jupiter" />
+        </div>
       </div>
     </section>
   )

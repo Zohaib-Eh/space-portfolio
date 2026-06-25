@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
 
 export function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -81,6 +82,9 @@ export function Contact() {
         <p className="text-center text-white/20 text-xs mt-8">
           psst — there&apos;s more to discover if you explore.
         </p>
+        <div className="mt-12">
+          <PuzzleSlot planetId="neptune" />
+        </div>
       </div>
     </section>
   )

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { StarfieldCanvas } from '@/components/ui/StarfieldCanvas'
 import { RotatingText } from '@/components/ui/RotatingText'
+import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
 
 const RubiksCube = dynamic(
   () => import('@/components/easter-eggs/RubiksCube').then((m) => ({ default: m.RubiksCube })),
@@ -77,6 +78,9 @@ export function Hero({ onOpenTerminal }: HeroProps) {
         <div className="hidden md:flex flex-shrink-0 items-center justify-center">
           <RubiksCube />
         </div>
+      </div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <PuzzleSlot planetId="saturn" />
       </div>
     </section>
   )
