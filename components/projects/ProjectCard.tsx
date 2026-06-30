@@ -20,13 +20,19 @@ export function ProjectCard({ project, onClick, index }: ProjectCardProps) {
       className="relative bg-white/5 border border-white/10 rounded-2xl p-6 cursor-pointer
         hover:border-accent/40 hover:bg-white/8 transition-all duration-300 group"
     >
-      {project.isHackathonWin && (
-        <div className="absolute top-4 right-4 bg-accent/20 border border-accent/40 rounded-full px-2 py-0.5 text-[10px] text-accent font-medium"
-          style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}>
+      {/* Win badge — gold, trophy */}
+      {project.isHackathonWin && project.hackathonLabel && (
+        <div className="absolute top-4 right-4 flex items-center gap-1 bg-amber-500/15 border border-amber-400/50 rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-amber-300">
           🏆 {project.hackathonLabel}
         </div>
       )}
-      <h3 className="font-serif text-xl font-bold mb-2 group-hover:text-accent transition-colors">
+      {/* Affiliate badge — muted, no trophy */}
+      {!project.isHackathonWin && project.hackathonAffiliate && (
+        <div className="absolute top-4 right-4 flex items-center gap-1 bg-white/5 border border-white/15 rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white/40">
+          ◈ {project.hackathonAffiliate}
+        </div>
+      )}
+      <h3 className="text-xl font-bold mb-2 group-hover:text-accent transition-colors">
         {project.title}
       </h3>
       <p className="text-white/50 text-sm mb-4 line-clamp-2">{project.description}</p>

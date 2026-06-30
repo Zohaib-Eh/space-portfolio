@@ -7,8 +7,9 @@ export interface ProjectItem {
   category: ProjectCategory
   tags: string[]
   githubUrl: string
-  isHackathonWin: boolean
-  hackathonLabel?: string
+  isHackathonWin: boolean   // true = placed / won a prize
+  hackathonLabel?: string   // shown in win badge
+  hackathonAffiliate?: string // hackathon name for non-winning entries
 }
 
 export const projects: ProjectItem[] = [
@@ -29,8 +30,8 @@ export const projects: ProjectItem[] = [
     category: 'aiml',
     tags: ['Python', 'FastAPI', 'Neo4j', 'LangChain', 'Next.js'],
     githubUrl: 'https://github.com/Zohaib-Eh/MediGraph',
-    isHackathonWin: true,
-    hackathonLabel: 'HackNation',
+    isHackathonWin: false,
+    hackathonAffiliate: 'HackNation',
   },
   {
     id: 'todo-gitops',
@@ -84,8 +85,8 @@ export const projects: ProjectItem[] = [
     category: 'blockchain',
     tags: ['Next.js', 'TypeScript', 'Concordium', 'Smart Contracts', 'ZK-Proofs'],
     githubUrl: 'https://github.com/Zohaib-Eh/Carma',
-    isHackathonWin: true,
-    hackathonLabel: 'Encode AI Hackathon',
+    isHackathonWin: false,
+    hackathonAffiliate: 'Encode AI Hackathon',
   },
   {
     id: 'gofish',
@@ -94,8 +95,8 @@ export const projects: ProjectItem[] = [
     category: 'blockchain',
     tags: ['TypeScript', 'Polkadot', 'Solidity', 'Next.js', 'DeFi'],
     githubUrl: 'https://github.com/Zohaib-Eh/GoFish',
-    isHackathonWin: true,
-    hackathonLabel: 'EasyA Hackathon',
+    isHackathonWin: false,
+    hackathonAffiliate: 'EasyA Hackathon',
   },
   {
     id: 'llm-ontology',

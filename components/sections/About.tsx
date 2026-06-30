@@ -16,7 +16,7 @@ export function About() {
         transition={{ duration: 0.7 }}
       >
         <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4">About</p>
-        <h2 className="font-serif text-4xl md:text-5xl font-bold mb-10">
+        <h2 className="text-4xl md:text-5xl font-bold mb-10">
           Building things that<br />
           <span className="accent">shouldn&apos;t exist yet.</span>
         </h2>
@@ -54,7 +54,7 @@ export function About() {
           </div>
         </div>
         <div className="mt-12">
-          <PuzzleSlot planetId="mercury" />
+          <PuzzleSlot planetId="venus" />
         </div>
       </motion.div>
     </section>

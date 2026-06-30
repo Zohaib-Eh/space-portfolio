@@ -20,6 +20,7 @@ export const useThemeStore = create<ThemeStore>()(
           unlockedPlanets: s.unlockedPlanets.includes(planet)
             ? s.unlockedPlanets
             : [...s.unlockedPlanets, planet],
+          activeTheme: planet,
         })),
       setActiveTheme: (planet) => set({ activeTheme: planet }),
     }),

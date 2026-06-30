@@ -26,7 +26,7 @@ export function Contact() {
     <section id="contact" className="relative z-10 py-32 px-6">
       <div className="max-w-2xl mx-auto">
         <p className="text-accent text-sm tracking-[0.3em] uppercase mb-4 text-center">Contact</p>
-        <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
           Let&apos;s talk.
         </h2>
         <p className="text-white/40 text-center mb-12 text-sm">

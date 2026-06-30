@@ -16,7 +16,7 @@ interface HeroProps {
 
 export function Hero({ onOpenTerminal }: HeroProps) {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center">
       <StarfieldCanvas />
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-16 px-6 max-w-6xl mx-auto w-full">
         {/* Text content */}
@@ -65,22 +65,14 @@ export function Hero({ onOpenTerminal }: HeroProps) {
               &gt;_ Mission Control
             </button>
           </motion.div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="mt-12 text-white/30 text-xs tracking-widest"
-          >
-            scroll to explore
-          </motion.p>
         </div>
         {/* Rubik's cube easter egg — hidden on mobile */}
         <div className="hidden md:flex flex-shrink-0 items-center justify-center">
           <RubiksCube />
         </div>
       </div>
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <PuzzleSlot planetId="saturn" />
+      <div className="absolute bottom-8 w-full px-6 max-w-5xl left-1/2 -translate-x-1/2">
+        <PuzzleSlot planetId="mercury" />
       </div>
     </section>
   )

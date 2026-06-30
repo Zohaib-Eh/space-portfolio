@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Playfair_Display, JetBrains_Mono } from 'next/font/google'
 import { ThemeInjector } from '@/components/ui/ThemeInjector'
+import { PlanetBackground } from '@/components/ui/PlanetBackground'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', weight: ['300','400','500','600','700','800'] })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' })
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
@@ -36,9 +37,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${jakarta.variable} ${playfair.variable} ${jetbrains.variable}`}>
       <body className="font-sans bg-bg text-white">
         <ThemeInjector />
+        <PlanetBackground />
         {children}
       </body>
     </html>

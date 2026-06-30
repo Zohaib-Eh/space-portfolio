@@ -32,12 +32,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             >
               ×
             </button>
-            {project.isHackathonWin && (
-              <p className="text-accent text-xs tracking-widest uppercase mb-2">
+            {project.isHackathonWin && project.hackathonLabel && (
+              <p className="text-amber-300 text-xs tracking-widest uppercase mb-2 font-semibold">
                 🏆 {project.hackathonLabel}
               </p>
             )}
-            <h2 className="font-serif text-3xl font-bold mb-2">{project.title}</h2>
+            {!project.isHackathonWin && project.hackathonAffiliate && (
+              <p className="text-white/35 text-xs tracking-widest uppercase mb-2">
+                ◈ {project.hackathonAffiliate}
+              </p>
+            )}
+            <h2 className="text-3xl font-bold mb-2">{project.title}</h2>
             <p className="text-white/60 mb-6 leading-relaxed">{project.description}</p>
             <div className="flex flex-wrap gap-1.5 mb-6">
               {project.tags.map(tag => (
