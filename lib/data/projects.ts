@@ -10,7 +10,7 @@ export interface ProjectItem {
   isHackathonWin: boolean   // true = placed / won a prize
   hackathonLabel?: string   // shown in win badge
   hackathonAffiliate?: string // hackathon name for non-winning entries
-  images?: string[]         // paths under /projects/ e.g. ['/projects/hack-the-wallet-1.png']
+  media?: string[]          // paths under /public — images or videos
 }
 
 export const projects: ProjectItem[] = [
@@ -23,6 +23,10 @@ export const projects: ProjectItem[] = [
     githubUrl: 'https://github.com/Zohaib-Eh/HackTheWalletEncode',
     isHackathonWin: true,
     hackathonLabel: 'Encode AI — 1st Prize',
+    media: [
+      '/projects/Hack%20The%20Wallet/HTW1.png',
+      '/projects/Hack%20The%20Wallet/HTW2.png',
+    ],
   },
   {
     id: 'medigraph',
@@ -33,6 +37,7 @@ export const projects: ProjectItem[] = [
     githubUrl: 'https://github.com/Zohaib-Eh/MediGraph',
     isHackathonWin: false,
     hackathonAffiliate: 'HackNation',
+    media: ['/projects/Medigraph/MG1.mp4'],
   },
   {
     id: 'todo-gitops',
@@ -42,6 +47,7 @@ export const projects: ProjectItem[] = [
     tags: ['React.js', 'FastAPI', 'Docker', 'AWS', 'GitHub Actions'],
     githubUrl: 'https://github.com/Zohaib-Eh/todo-gitops',
     isHackathonWin: false,
+    media: ['/projects/GitOps%20Driven%20Task%20Managment/GitOps1.png'],
   },
   {
     id: 'hri',
@@ -51,15 +57,18 @@ export const projects: ProjectItem[] = [
     tags: ['Python', 'OpenCV', 'MediaPipe', 'TensorFlow', 'MATLAB'],
     githubUrl: 'https://github.com/Zohaib-Eh/HRI',
     isHackathonWin: false,
+    media: ['/projects/Human%20Robot%20Interaction/HRI1.jpeg'],
   },
   {
-    id: 'ripple',
-    title: 'Ripple',
-    description: 'Modular Python-based data processing system with specialized components for data ingestion, graph processing, and impact analysis.',
+    id: 'stella',
+    title: 'Stella',
+    description: 'Real-time disruption early-warning platform for London small businesses — GPU-accelerated road-graph BFS (RAPIDS cuGraph) computes an access-health score from live TfL feeds, JamCam vision analysis via NVIDIA Nemotron VLM, and deprivation-weighted city-scale mapping across ~25k high-street businesses.',
     category: 'aiml',
-    tags: ['Python', 'Graph Processing', 'Data Engineering'],
-    githubUrl: 'https://github.com/Zohaib-Eh/Ripple',
-    isHackathonWin: false,
+    tags: ['Python', 'FastAPI', 'RAPIDS cuGraph', 'NVIDIA Nemotron', 'TfL API', 'Leaflet.js', 'vLLM'],
+    githubUrl: 'https://github.com/Zohaib-Eh/Stella-Access-Health',
+    isHackathonWin: true,
+    hackathonAffiliate: 'Hack for Impact London — NVIDIA',
+    media: ['/projects/Stella/STLA1.mp4'],
   },
   {
     id: 'codaline',
@@ -69,6 +78,10 @@ export const projects: ProjectItem[] = [
     tags: ['Next.js', 'FastAPI', 'Claude API', 'SAM2', 'FFmpeg', 'ElevenLabs'],
     githubUrl: 'https://github.com/Zohaib-Eh/Codaline',
     isHackathonWin: false,
+    media: [
+      '/projects/Codaline/CD1.png',
+      '/projects/Codaline/CD2.mp4',
+    ],
   },
   {
     id: 'wayfarerr',
@@ -78,6 +91,7 @@ export const projects: ProjectItem[] = [
     tags: ['Dart', 'Flutter', 'AI'],
     githubUrl: 'https://github.com/Zohaib-Eh/WayFarer',
     isHackathonWin: false,
+    media: ['/projects/Wayfarer/WF1.png'],
   },
   {
     id: 'carma',
@@ -88,6 +102,7 @@ export const projects: ProjectItem[] = [
     githubUrl: 'https://github.com/Zohaib-Eh/Carma',
     isHackathonWin: false,
     hackathonAffiliate: 'Encode AI Hackathon',
+    media: ['/projects/Carma/CM1.mp4'],
   },
   {
     id: 'gofish',
@@ -98,6 +113,7 @@ export const projects: ProjectItem[] = [
     githubUrl: 'https://github.com/Zohaib-Eh/GoFish',
     isHackathonWin: false,
     hackathonAffiliate: 'EasyA Hackathon',
+    media: ['/projects/GoFish/GF1.png'],
   },
   {
     id: 'llm-ontology',
@@ -107,5 +123,6 @@ export const projects: ProjectItem[] = [
     tags: ['Python', 'Jupyter', 'LLM', 'NLP', 'RDF', 'Ontology'],
     githubUrl: 'https://github.com/Zohaib-Eh/LLM-based-Ontology-Discovery',
     isHackathonWin: false,
+    media: ['/projects/LLM-based%20Ontology%20Discovery/OntDisc1.png'],
   },
 ]

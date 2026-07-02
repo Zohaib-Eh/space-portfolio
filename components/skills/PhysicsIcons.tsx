@@ -64,8 +64,12 @@ function StaticGrid() {
   )
 }
 
+const CURSOR_SIZE = 52
+const REPULSE_RING = 160 // must match repulsion radius in tick
+
 export function PhysicsIcons() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const cursorRef = useRef<HTMLDivElement>(null)
   const inView = useInView(containerRef, { once: true })
   const [isMobile, setIsMobile] = useState(false)
   const [earthOpen, setEarthOpen] = useState(false)
@@ -86,7 +90,7 @@ export function PhysicsIcons() {
     const particleCount = skillIcons.length + 1
     particlesRef.current = Array.from({ length: particleCount }).map(() => {
       const angle = Math.random() * Math.PI * 2
-      const speed = 0.12 + Math.random() * 0.18 // slow drift
+      const speed = 0.12 + Math.random() * 0.18
       return {
         x: PAD + Math.random() * (W - PAD * 2),
         y: PAD + Math.random() * (H - PAD * 2),
@@ -99,9 +103,18 @@ export function PhysicsIcons() {
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect()
-      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+      const mx = e.clientX - rect.left
+      const my = e.clientY - rect.top
+      mouseRef.current = { x: mx, y: my }
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = '1'
+        cursorRef.current.style.transform = `translate(${mx - CURSOR_SIZE / 2}px, ${my - CURSOR_SIZE / 2}px)`
+      }
     }
-    const onMouseLeave = () => { mouseRef.current = { x: -9999, y: -9999 } }
+    const onMouseLeave = () => {
+      mouseRef.current = { x: -9999, y: -9999 }
+      if (cursorRef.current) cursorRef.current.style.opacity = '0'
+    }
     container.addEventListener('mousemove', onMouseMove)
     container.addEventListener('mouseleave', onMouseLeave)
 
@@ -115,8 +128,8 @@ export function PhysicsIcons() {
         const dx = p.x - mx
         const dy = p.y - my
         const dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 120 && dist > 0) {
-          const force = ((120 - dist) / 120) * 0.04 // gentle push
+        if (dist < 160 && dist > 0) {
+          const force = ((160 - dist) / 160) * 0.18
           p.vx += (dx / dist) * force
           p.vy += (dy / dist) * force
         }
@@ -154,7 +167,7 @@ export function PhysicsIcons() {
       ps.forEach((p, i) => {
         // Speed cap
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy)
-        if (speed > 1.5) { p.vx = (p.vx / speed) * 1.5; p.vy = (p.vy / speed) * 1.5 }
+        if (speed > 3.5) { p.vx = (p.vx / speed) * 3.5; p.vy = (p.vy / speed) * 3.5 }
         // Minimum drift
         if (speed < 0.08) {
           const a = Math.random() * Math.PI * 2
@@ -205,7 +218,70 @@ export function PhysicsIcons() {
       <div
         ref={containerRef}
         className="relative w-full h-[460px] overflow-hidden"
+        style={{ cursor: 'none' }}
       >
+        {/* Custom asteroid cursor */}
+        <div
+          ref={cursorRef}
+          style={{
+            position: 'absolute',
+            top: 0, left: 0,
+            width: CURSOR_SIZE,
+            height: CURSOR_SIZE,
+            pointerEvents: 'none',
+            zIndex: 30,
+            opacity: 0,
+            transition: 'opacity 0.12s',
+          }}
+        >
+          {/* Repulsion radius ring */}
+          <div style={{
+            position: 'absolute',
+            width: REPULSE_RING * 2,
+            height: REPULSE_RING * 2,
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '50%',
+            border: '1px dashed rgba(255,255,255,0.18)',
+            pointerEvents: 'none',
+          }} />
+          {/* Outward arrow ticks at cardinal points */}
+          {[0, 90, 180, 270].map(deg => (
+            <div key={deg} style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              width: 8, height: 10,
+              transform: `rotate(${deg}deg) translateY(-${REPULSE_RING - 2}px) translateX(-4px)`,
+              color: 'rgba(255,255,255,0.35)',
+              fontSize: 10, lineHeight: 1,
+              fontFamily: 'monospace',
+              pointerEvents: 'none',
+            }}>▲</div>
+          ))}
+          {/* Asteroid body */}
+          <div style={{
+            width: CURSOR_SIZE,
+            height: CURSOR_SIZE,
+            clipPath: ASTEROID_SHAPES[2],
+            background: 'radial-gradient(circle at 36% 30%, #c4a882 0%, #7a5a38 38%, #3e2b15 68%, #1c1008 100%)',
+            filter: 'drop-shadow(0 3px 12px rgba(0,0,0,0.9))',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+          }}>
+            <span style={{
+              position: 'absolute', top: '22%', left: '24%',
+              fontSize: 13, fontWeight: 700, color: 'rgba(255,240,200,0.85)',
+              lineHeight: 1, fontFamily: 'monospace',
+            }}>−</span>
+            <span style={{
+              position: 'absolute', bottom: '22%', right: '22%',
+              fontSize: 11, fontWeight: 700, color: 'rgba(255,240,200,0.85)',
+              lineHeight: 1, fontFamily: 'monospace',
+            }}>+</span>
+          </div>
+        </div>
         {Array.from({ length: totalCount }).map((_, i) => {
           const isSecret = i === SECRET_INDEX
           const skillIndex = i < SECRET_INDEX ? i : i - 1

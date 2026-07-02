@@ -8,8 +8,14 @@ interface ProjectCardProps {
   index: number
 }
 
+function isVideo(src: string) {
+  return /\.(mp4|mov|webm|ogg)$/i.test(src)
+}
+
 export function ProjectCard({ project, onClick, index }: ProjectCardProps) {
-  const thumb = project.images?.[0]
+  const thumb = project.media?.[0]
+  const thumbIsVideo = !!thumb && isVideo(thumb)
+  const mediaCount = project.media?.length ?? 0
 
   return (
     <motion.div
@@ -22,22 +28,38 @@ export function ProjectCard({ project, onClick, index }: ProjectCardProps) {
       className="relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer
         hover:border-accent/40 hover:bg-white/8 transition-all duration-300 group"
     >
-      {/* Image or placeholder */}
-      <div className="relative h-44 overflow-hidden bg-white/3">
+      {/* Thumbnail */}
+      <div className="relative h-44 overflow-hidden bg-black">
         {thumb ? (
-          <img
-            src={thumb}
-            alt={project.title}
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            draggable={false}
-          />
+          thumbIsVideo ? (
+            <div className="relative w-full h-full">
+              <video
+                src={`${thumb}?card`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                preload="metadata"
+                muted
+                playsInline
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <div className="w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                  <svg width="12" height="12" viewBox="0 0 10 10" fill="white"><polygon points="2,1 9,5 2,9"/></svg>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={thumb}
+              alt={project.title}
+              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              draggable={false}
+            />
+          )
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-4xl opacity-20 select-none">{ }</span>
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
           </div>
         )}
-        {/* Badges over image */}
+        {/* Badges */}
         {project.isHackathonWin && project.hackathonLabel && (
           <div className="absolute top-3 left-3 flex items-center gap-1 bg-black/60 backdrop-blur-sm border border-amber-400/50 rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-amber-300">
             🏆 {project.hackathonLabel}
@@ -48,10 +70,10 @@ export function ProjectCard({ project, onClick, index }: ProjectCardProps) {
             ◈ {project.hackathonAffiliate}
           </div>
         )}
-        {/* Multiple images indicator */}
-        {project.images && project.images.length > 1 && (
+        {/* Media count */}
+        {mediaCount > 1 && (
           <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm border border-white/15 rounded-full px-2 py-0.5 text-[10px] font-mono text-white/50">
-            1/{project.images.length}
+            1/{mediaCount}
           </div>
         )}
       </div>
