@@ -1,6 +1,7 @@
 'use client'
 import { NeuralNetwork } from '@/components/experience/NeuralNetwork'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { BinaryToggle } from '@/components/puzzles/BinaryToggle'
 
 export function Experience() {
   return (
@@ -12,7 +13,7 @@ export function Experience() {
         </h2>
         <NeuralNetwork />
         <div className="mt-12">
-          <PuzzleSlot planetId="mars" />
+          <PuzzleSlot planetId="mars"><BinaryToggle onSolve={() => {}} /></PuzzleSlot>
         </div>
       </div>
     </section>

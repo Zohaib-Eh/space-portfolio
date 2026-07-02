@@ -8,7 +8,10 @@ const HELP = `available commands:
   ssh github      open GitHub
   ssh linkedin    open LinkedIn
   clear           clear terminal
-  exit / close    close terminal`
+  exit / close    close terminal
+
+✦ puzzles are hidden throughout the site
+  solve them to unlock planet themes — start exploring`
 
 export function parseCommand(input: string, cwd: string[]): string {
   const trimmed = input.trim()
@@ -26,9 +29,10 @@ export function parseCommand(input: string, cwd: string[]): string {
     }
 
     case 'cd': {
-      const target = arg.replace('/', '').replace('.', '')
-      if (target === '' || target === '~') return 'cd: moved to ~'
-      if (target === '..') return 'cd: moved up'
+      const rawTarget = arg.trim()
+      if (rawTarget === '..' || rawTarget === '../') return 'cd: moved up'
+      if (rawTarget === '' || rawTarget === '~') return 'cd: moved to ~'
+      const target = rawTarget.replace(/\//g, '')
       if (filesystem[target as keyof typeof filesystem]) return `cd: now in ${target}/`
       return `cd: ${arg}: No such file or directory`
     }

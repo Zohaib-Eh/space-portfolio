@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { StarfieldCanvas } from '@/components/ui/StarfieldCanvas'
 import { RotatingText } from '@/components/ui/RotatingText'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { SimonPuzzle } from '@/components/puzzles/SimonPuzzle'
 
 const RubiksCube = dynamic(
   () => import('@/components/easter-eggs/RubiksCube').then((m) => ({ default: m.RubiksCube })),
@@ -72,7 +73,7 @@ export function Hero({ onOpenTerminal }: HeroProps) {
         </div>
       </div>
       <div className="absolute bottom-8 w-full px-6 max-w-5xl left-1/2 -translate-x-1/2">
-        <PuzzleSlot planetId="mercury" />
+        <PuzzleSlot planetId="mercury"><SimonPuzzle onSolve={() => {}} /></PuzzleSlot>
       </div>
     </section>
   )

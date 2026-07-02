@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { LightsOut } from '@/components/puzzles/LightsOut'
 import { PlanetBackground } from '@/components/ui/PlanetBackground'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -176,7 +177,7 @@ export default function ResumePage() {
 
         {/* Uranus puzzle */}
         <div className="mt-16">
-          <PuzzleSlot planetId="uranus" />
+          <PuzzleSlot planetId="uranus"><LightsOut onSolve={() => {}} /></PuzzleSlot>
         </div>
       </div>
     </div>

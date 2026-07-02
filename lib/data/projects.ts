@@ -10,6 +10,7 @@ export interface ProjectItem {
   isHackathonWin: boolean   // true = placed / won a prize
   hackathonLabel?: string   // shown in win badge
   hackathonAffiliate?: string // hackathon name for non-winning entries
+  images?: string[]         // paths under /projects/ e.g. ['/projects/hack-the-wallet-1.png']
 }
 
 export const projects: ProjectItem[] = [

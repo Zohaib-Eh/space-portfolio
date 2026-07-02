@@ -6,6 +6,7 @@ import { CategoryFilter } from '@/components/projects/CategoryFilter'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { ProjectModal } from '@/components/projects/ProjectModal'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { Mastermind } from '@/components/puzzles/Mastermind'
 import type { ProjectItem, ProjectCategory } from '@/lib/data/projects'
 
 type FilterValue = 'all' | ProjectCategory
@@ -37,9 +38,9 @@ export function Projects() {
             ))}
           </AnimatePresence>
         </div>
-        <div className="mt-12">
-          <PuzzleSlot planetId="saturn" />
-        </div>
+      </div>
+      <div className="max-w-5xl mx-auto px-6 mt-12">
+        <PuzzleSlot planetId="saturn"><Mastermind onSolve={() => {}} /></PuzzleSlot>
       </div>
       <ProjectModal project={selected} onClose={() => setSelected(null)} />
     </section>

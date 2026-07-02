@@ -2,6 +2,46 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { parseCommand } from '@/lib/terminal/parser'
+import { filesystem } from '@/lib/terminal/filesystem'
+
+const COMMANDS = ['help', 'ls', 'cd', 'cat', 'ssh', 'whoami', 'pwd', 'clear', 'exit', 'close']
+
+function autocomplete(input: string, cwd: string[]): string | null {
+  const parts = input.split(' ')
+  const cmd = parts[0]
+  const arg = parts.slice(1).join(' ')
+
+  // Complete command name
+  if (parts.length === 1) {
+    const matches = COMMANDS.filter(c => c.startsWith(cmd) && c !== cmd)
+    return matches.length === 1 ? matches[0] : null
+  }
+
+  const dir = cwd[cwd.length - 1] ?? 'root'
+  const files = filesystem[dir as keyof typeof filesystem] ?? filesystem.root
+
+  // Complete argument
+  if (cmd === 'cd') {
+    const dirs = files.filter(f => f.endsWith('/'))
+    const matches = dirs.filter(f => f.startsWith(arg) && f !== arg)
+    if (matches.length === 1) return `${cmd} ${matches[0].replace('/', '')}`
+    if (arg === '' || arg === '.' || arg === '..') return null
+  }
+
+  if (cmd === 'cat') {
+    const txtFiles = files.filter(f => f.endsWith('.txt'))
+    const matches = txtFiles.filter(f => f.startsWith(arg) && f !== arg)
+    if (matches.length === 1) return `${cmd} ${matches[0]}`
+  }
+
+  if (cmd === 'ssh') {
+    const targets = ['github', 'linkedin']
+    const matches = targets.filter(t => t.startsWith(arg) && t !== arg)
+    if (matches.length === 1) return `${cmd} ${matches[0]}`
+  }
+
+  return null
+}
 
 interface TerminalProps {
   open: boolean
@@ -83,12 +123,19 @@ export function Terminal({ open, onClose }: TerminalProps) {
 
   const onKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') submit()
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      const completed = autocomplete(input, cwd)
+      if (completed) setInput(completed)
+    }
     if (e.key === 'ArrowUp') {
+      e.preventDefault()
       const i = Math.min(histIndex + 1, history.length - 1)
       setHistIndex(i)
       setInput(history[i] ?? '')
     }
     if (e.key === 'ArrowDown') {
+      e.preventDefault()
       const i = Math.max(histIndex - 1, -1)
       setHistIndex(i)
       setInput(i === -1 ? '' : history[i])
@@ -123,7 +170,7 @@ export function Terminal({ open, onClose }: TerminalProps) {
               <div key={i}>
                 {line.type === 'input' ? (
                   <p>
-                    <span className="text-[#20C8E8]">{`zohaib@mission-control:~$ `}</span>
+                    <span className="text-[#20C8E8]">{`zohaib@mission-control:${line.cwd.length > 0 ? `~/${line.cwd.join('/')}` : '~'}$ `}</span>
                     <span className="text-white">{line.content}</span>
                   </p>
                 ) : (

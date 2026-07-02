@@ -1,3 +1,34 @@
+import { experienceNodes } from './experience'
+import { projects } from './projects'
+
+// Derive job text directly from experience.ts — edit there, terminal updates automatically
+const jobs = Object.fromEntries(
+  experienceNodes
+    .filter(n => n.type === 'job')
+    .map(n => [
+      n.id,
+      [
+        `${n.title} — ${n.subtitle}`,
+        n.period ?? '',
+        ...(n.bullets ?? []).map(b => `• ${b}`),
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    ])
+)
+
+// Derive project text directly from projects.ts — edit there, terminal updates automatically
+const projectDetails = Object.fromEntries(
+  projects.map(p => [
+    p.id,
+    [
+      p.isHackathonWin ? `${p.title} — ${p.hackathonLabel}` : p.title,
+      `Stack: ${p.tags.join(', ')}`,
+      p.description,
+    ].join('\n'),
+  ])
+)
+
 export const terminalData = {
   about: `Zohaib Ehtesham
 ================
@@ -28,40 +59,10 @@ LinkedIn: linkedin.com/in/zohaib-ehtesham
 
   secret: `nice try :)`,
 
-  experience: ['eloquence', 'nissan', 'iisc', 'brunel-intern'],
+  // IDs shown when user runs "ls" in experience/ and projects/
+  experience: experienceNodes.filter(n => n.type === 'job').map(n => n.id),
+  projects: projects.map(p => p.id),
 
-  jobs: {
-    eloquence: `Research Assistant — ELOQUENCE (EU Horizon Project)
-March 2026 – Present
-• Building AI evaluation framework for LLM-based agents
-• Metrics: hallucination, robustness, bias across multilingual datasets`,
-    nissan: `Software Engineer — Nissan Technical Center Europe
-August 2023 – August 2024
-• React.js + FastAPI app: reduced manual effort by 60%
-• Voice recognition testing: Google Automotive, Amazon Alexa`,
-    iisc: `Research Intern (Turing Fellow) — Indian Institute of Science
-June 2023 – July 2023
-• Hand gesture recognition: 96.67% accuracy (OpenCV, MediaPipe, TensorFlow)
-• UR5 robot kinematics in MATLAB + Python`,
-    'brunel-intern': `Summer Intern — Brunel University London
-August 2022 – September 2022
-• Loneliness prediction model: ~2 RMSE on UCLA scale (Google NLP API)`,
-  },
-
-  projects: ['hack-the-wallet', 'medigraph', 'todo-gitops', 'hri'],
-
-  projectDetails: {
-    'hack-the-wallet': `Hack the Wallet — Encode AI 1st Prize Winner
-Stack: Next.js, Starknet, Gemini API, Web3
-AI agent game with dynamic NPC interaction via natural language + crypto rewards.`,
-    medigraph: `MediGraph — HackNation
-Stack: Python, FastAPI, Neo4j, LangChain, Next.js
-Healthcare intelligence platform with RAG-based natural language querying.`,
-    'todo-gitops': `GitOps Task Platform
-Stack: React.js, FastAPI, SQLite, Docker, AWS, GitHub Actions
-Full-stack with CI/CD, containerized backend on AWS ECR, frontend on S3+CloudFront.`,
-    hri: `Human-Robot Interaction — IISc Turing Fellowship
-Stack: Python, OpenCV, MediaPipe, TensorFlow, MATLAB
-Gesture recognition at 96.67% accuracy, UR5 robot kinematics.`,
-  },
+  jobs,
+  projectDetails,
 }

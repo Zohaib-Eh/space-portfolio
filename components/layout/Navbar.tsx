@@ -15,30 +15,37 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3">
-      {/* Pill */}
-      <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5">
-        <span className="font-serif font-bold text-sm tracking-wide">Zohaib Ehtesham.</span>
-        <div className="hidden md:flex items-center gap-4">
-          {navLinks.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-white/70 hover:text-accent transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-6">
+      <div className="flex items-center">
+        {/* Left: spacer to keep pill centered */}
+        <div className="flex-1" />
+        {/* Center: Nav pill */}
+        <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2.5">
+          <span className="font-serif font-bold text-sm tracking-wide">Zohaib Ehtesham.</span>
+          <div className="hidden md:flex items-center gap-4">
+            {navLinks.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-white/70 hover:text-accent transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <button
+            className="md:hidden text-white/70"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Menu"
+          >
+            ☰
+          </button>
         </div>
-        <button
-          className="md:hidden text-white/70"
-          onClick={() => setMenuOpen(o => !o)}
-          aria-label="Menu"
-        >
-          ☰
-        </button>
+        {/* Right: Planet button */}
+        <div className="flex-1 flex justify-end">
+          <PlanetDropdown />
+        </div>
       </div>
-      <PlanetDropdown />
       {/* Mobile menu */}
       {menuOpen && (
         <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-6 py-4 flex flex-col gap-3">

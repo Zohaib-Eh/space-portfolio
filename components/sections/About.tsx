@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { CaesarCipher } from '@/components/puzzles/CaesarCipher'
 
 export function About() {
   const ref = useRef(null)
@@ -54,7 +55,7 @@ export function About() {
           </div>
         </div>
         <div className="mt-12">
-          <PuzzleSlot planetId="venus" />
+          <PuzzleSlot planetId="venus"><CaesarCipher onSolve={() => {}} /></PuzzleSlot>
         </div>
       </motion.div>
     </section>

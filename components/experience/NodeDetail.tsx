@@ -26,7 +26,7 @@ export function NodeDetail({ node, onClose }: NodeDetailProps) {
           <p className="text-accent text-xs tracking-widest uppercase mb-1">
             {node.type === 'award' ? 'Award' : 'Experience'}
           </p>
-          <h3 className="font-serif text-lg font-bold mb-1">{node.title}</h3>
+          <h3 className="text-lg font-bold mb-1">{node.title}</h3>
           <p className="text-white/50 text-sm mb-3">{node.subtitle}</p>
           {node.period && (
             <p className="text-white/40 text-xs mb-4">{node.period}</p>

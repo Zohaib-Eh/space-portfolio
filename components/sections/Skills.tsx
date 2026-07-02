@@ -1,6 +1,7 @@
 'use client'
 import { PhysicsIcons } from '@/components/skills/PhysicsIcons'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { LogicGates } from '@/components/puzzles/LogicGates'
 
 export function Skills() {
   return (
@@ -14,7 +15,7 @@ export function Skills() {
       <PhysicsIcons />
 
       <div className="max-w-5xl mx-auto px-6 mt-12">
-        <PuzzleSlot planetId="jupiter" />
+        <PuzzleSlot planetId="jupiter"><LogicGates onSolve={() => {}} /></PuzzleSlot>
       </div>
     </section>
   )

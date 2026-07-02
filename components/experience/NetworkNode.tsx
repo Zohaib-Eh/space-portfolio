@@ -9,9 +9,10 @@ interface NetworkNodeProps {
   visible: boolean
   selected: boolean
   onClick: () => void
+  delay?: number
 }
 
-export function NetworkNode({ node, x, y, visible, selected, onClick }: NetworkNodeProps) {
+export function NetworkNode({ node, x, y, visible, selected, onClick, delay = 0 }: NetworkNodeProps) {
   const isJob = node.type === 'job'
   const r = isJob ? 28 : 16
 
@@ -19,24 +20,37 @@ export function NetworkNode({ node, x, y, visible, selected, onClick }: NetworkN
     <motion.g
       initial={{ opacity: 0, scale: 0 }}
       animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-      transition={{ duration: 0.5, type: 'spring' }}
+      transition={{ duration: 0.5, type: 'spring', delay }}
       style={{ originX: `${x}px`, originY: `${y}px` }}
       onClick={onClick}
       className="cursor-pointer"
     >
+      {/* Glow ring behind node */}
+      <circle
+        cx={x}
+        cy={y}
+        r={r + 6}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth={selected ? 8 : isJob ? 6 : 4}
+        strokeOpacity={selected ? 0.35 : 0.12}
+        filter="url(#glow-strong)"
+      />
+      {/* Main circle */}
       <circle
         cx={x}
         cy={y}
         r={r}
-        className={`transition-all duration-300 ${
-          selected
-            ? 'fill-accent stroke-accent'
+        strokeWidth={selected ? 2.5 : 1.5}
+        stroke="var(--accent)"
+        strokeOpacity={selected ? 1 : isJob ? 0.6 : 0.45}
+        style={{
+          fill: selected
+            ? 'var(--accent)'
             : isJob
-            ? 'fill-white/10 stroke-white/40 hover:fill-white/20'
-            : 'fill-accent/20 stroke-accent/60 hover:fill-accent/40'
-        }`}
-        strokeWidth={selected ? 2 : 1.5}
-        style={{ fill: selected ? 'var(--accent)' : undefined }}
+            ? 'rgba(255,255,255,0.08)'
+            : 'color-mix(in srgb, var(--accent) 15%, transparent)',
+        }}
       />
       {node.type === 'award' && (
         <text
@@ -44,7 +58,8 @@ export function NetworkNode({ node, x, y, visible, selected, onClick }: NetworkN
           y={y + 4}
           textAnchor="middle"
           fontSize={10}
-          fill="currentColor"
+          fill={selected ? '#050510' : 'var(--accent)'}
+          fillOpacity={0.9}
           className="pointer-events-none select-none"
         >
           ★

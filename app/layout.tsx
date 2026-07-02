@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans, Playfair_Display, JetBrains_Mono } from 'next/font/google'
 import { ThemeInjector } from '@/components/ui/ThemeInjector'
 import { PlanetBackground } from '@/components/ui/PlanetBackground'
+import { PuzzleHint } from '@/components/ui/PuzzleHint'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', weight: ['300','400','500','600','700','800'] })
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans bg-bg text-white">
         <ThemeInjector />
         <PlanetBackground />
+        <PuzzleHint />
         {children}
       </body>
     </html>

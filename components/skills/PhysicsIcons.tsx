@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'framer-motion'
 import { skillIcons } from '@/lib/data/skills'
 import { PuzzleSlot } from '@/components/easter-eggs/PuzzleSlot'
+import { Minesweeper } from '@/components/puzzles/Minesweeper'
 
 // Secret Earth asteroid — hidden among the regular skills
 const SECRET_SHAPE = 'polygon(50% 0%, 80% 12%, 100% 40%, 88% 76%, 62% 100%, 28% 98%, 4% 72%, 0% 40%, 18% 12%, 40% 2%)'
@@ -288,7 +289,7 @@ export function PhysicsIcons() {
             <p className="text-[10px] tracking-[0.3em] uppercase text-white/30 mb-3 text-center font-mono">
               you found it
             </p>
-            <PuzzleSlot planetId="earth" />
+            <PuzzleSlot planetId="earth"><Minesweeper onSolve={() => {}} /></PuzzleSlot>
             <p className="text-center text-white/20 text-xs mt-3">click outside to close</p>
           </div>
         </div>
