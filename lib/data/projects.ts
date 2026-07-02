@@ -67,6 +67,7 @@ export const projects: ProjectItem[] = [
     tags: ['Python', 'FastAPI', 'RAPIDS cuGraph', 'NVIDIA Nemotron', 'TfL API', 'Leaflet.js', 'vLLM'],
     githubUrl: 'https://github.com/Zohaib-Eh/Stella-Access-Health',
     isHackathonWin: true,
+    hackathonLabel: 'Hack for Impact London — Winner',
     hackathonAffiliate: 'Hack for Impact London — NVIDIA',
     media: ['/projects/Stella/STLA1.mp4'],
   },
