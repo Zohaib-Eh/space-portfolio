@@ -345,14 +345,22 @@ function FocusCubeScene({
 
   const cameraRef = useRef<THREE.Camera | null>(null)
 
+  // Keyboard bindings — spatially mapped to face edges:
+  //   W/E = top row   Q/A = left col   R/F = right col   Z/X = bottom row   S/D = face CW/CCW
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (!cameraRef.current) return
       const f = getViewFaces(cameraRef.current)
+      const top    = edgeMoves(f.up,     f.fwd, f.camRight, f.camUp)
+      const bottom = edgeMoves(f.bottom, f.fwd, f.camRight, f.camUp)
+      const left   = edgeMoves(f.left,   f.fwd, f.camRight, f.camUp)
+      const right  = edgeMoves(f.right,  f.fwd, f.camRight, f.camUp)
       const map: Record<string, string> = {
-        q: f.front.cw,  w: f.front.ccw,
-        e: f.right.cw,  r: f.right.ccw,
-        t: f.up.cw,     y: f.up.ccw,
+        w: top.neg,    e: top.pos,
+        z: bottom.neg, x: bottom.pos,
+        q: left.pos,   a: left.neg,
+        r: right.pos,  f: right.neg,
+        s: f.front.cw, d: f.front.ccw,
       }
       const move = map[e.key.toLowerCase()]
       if (move) { e.preventDefault(); requestMove(move) }
@@ -360,6 +368,7 @@ function FocusCubeScene({
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
   }, [requestMove])
+
 
   useFrame(({ camera }) => {
     cameraRef.current = camera
@@ -440,9 +449,9 @@ function FocusCubeScene({
 // ---------------------------------------------------------------------------
 
 function ArrowBtn({
-  move, label, onMove, onHover,
+  move, label, keyHint, onMove, onHover,
 }: {
-  move: string; label: string
+  move: string; label: string; keyHint?: string
   onMove: (m: string) => void
   onHover: (m: string | null) => void
 }) {
@@ -452,7 +461,7 @@ function ArrowBtn({
       onClick={() => onMove(move)}
       onMouseEnter={() => onHover(move)}
       onMouseLeave={() => onHover(null)}
-      className="w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all active:scale-90 border"
+      className="relative w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all active:scale-90 border"
       style={{ borderColor:`${color}35`, background:`${color}0a`, color:`${color}aa` }}
       onMouseOver={e => {
         const el = e.currentTarget
@@ -466,9 +475,14 @@ function ArrowBtn({
         el.style.borderColor   = `${color}35`
         el.style.color         = `${color}aa`
       }}
-      title={move}
+      title={`${move}${keyHint ? ` (${keyHint})` : ''}`}
     >
       {label}
+      {keyHint && (
+        <span className="absolute top-0.5 right-1 text-[7px] font-mono leading-none" style={{ color:`${color}55` }}>
+          {keyHint}
+        </span>
+      )}
     </button>
   )
 }
@@ -496,66 +510,71 @@ function EdgeControls({
     <div className="flex flex-col items-center gap-1 pb-4 pt-2 select-none">
       {/* Face label */}
       <p className="text-[9px] font-mono uppercase tracking-widest text-white/25 mb-1">
-        facing {faces.front.name} face · q/w e/r t/y
+        facing {faces.front.name} face
       </p>
 
-      {/* Top row arrows — control top edge (up-adjacent face) */}
+      {/* Top row arrows — W / E */}
       <div className="flex gap-1">
-        <ArrowBtn move={top.neg} label="←" onMove={onMove} onHover={onHover} />
-        <ArrowBtn move={top.pos} label="→" onMove={onMove} onHover={onHover} />
+        <ArrowBtn move={top.neg} label="←" keyHint="W" onMove={onMove} onHover={onHover} />
+        <ArrowBtn move={top.pos} label="→" keyHint="E" onMove={onMove} onHover={onHover} />
       </div>
 
       {/* Middle: left | face | right */}
       <div className="flex items-center gap-1">
-        {/* Left column */}
+        {/* Left column — Q / A */}
         <div className="flex flex-col gap-1">
-          <ArrowBtn move={left.pos} label="↑" onMove={onMove} onHover={onHover} />
-          <ArrowBtn move={left.neg} label="↓" onMove={onMove} onHover={onHover} />
+          <ArrowBtn move={left.pos} label="↑" keyHint="Q" onMove={onMove} onHover={onHover} />
+          <ArrowBtn move={left.neg} label="↓" keyHint="A" onMove={onMove} onHover={onHover} />
         </div>
 
-        {/* Center face square */}
+        {/* Center face square — S / D */}
         <div
           className="w-[92px] h-[92px] rounded-xl flex flex-col items-center justify-center gap-1 border"
           style={{ background:`${frontColor}12`, borderColor:`${frontColor}40` }}
         >
           <div className="w-4 h-4 rounded-sm" style={{ background: frontColor, boxShadow:`0 0 8px ${frontColor}` }} />
           <span className="text-[9px] font-mono text-white/40">{faces.front.name} face</span>
-          {/* CW / CCW for the face itself */}
           <div className="flex gap-1 mt-0.5">
             <button
               onClick={() => onMove(faces.front.cw)}
               onMouseEnter={() => onHover(faces.front.cw)}
               onMouseLeave={() => onHover(null)}
-              className="w-7 h-7 rounded-md text-xs border transition-all active:scale-90"
+              className="relative w-7 h-7 rounded-md text-xs border transition-all active:scale-90"
               style={{ borderColor:`${frontColor}40`, background:`${frontColor}10`, color:`${frontColor}aa` }}
-              title={`${faces.front.name} CW`}
-            >↻</button>
+              title={`${faces.front.name} CW (S)`}
+            >
+              ↻
+              <span className="absolute top-0.5 right-0.5 text-[7px] font-mono leading-none" style={{ color:`${frontColor}55` }}>S</span>
+            </button>
             <button
               onClick={() => onMove(faces.front.ccw)}
               onMouseEnter={() => onHover(faces.front.ccw)}
               onMouseLeave={() => onHover(null)}
-              className="w-7 h-7 rounded-md text-xs border transition-all active:scale-90"
+              className="relative w-7 h-7 rounded-md text-xs border transition-all active:scale-90"
               style={{ borderColor:`${frontColor}40`, background:`${frontColor}10`, color:`${frontColor}aa` }}
-              title={`${faces.front.name} CCW`}
-            >↺</button>
+              title={`${faces.front.name} CCW (D)`}
+            >
+              ↺
+              <span className="absolute top-0.5 right-0.5 text-[7px] font-mono leading-none" style={{ color:`${frontColor}55` }}>D</span>
+            </button>
           </div>
         </div>
 
-        {/* Right column */}
+        {/* Right column — R / F */}
         <div className="flex flex-col gap-1">
-          <ArrowBtn move={right.pos} label="↑" onMove={onMove} onHover={onHover} />
-          <ArrowBtn move={right.neg} label="↓" onMove={onMove} onHover={onHover} />
+          <ArrowBtn move={right.pos} label="↑" keyHint="R" onMove={onMove} onHover={onHover} />
+          <ArrowBtn move={right.neg} label="↓" keyHint="F" onMove={onMove} onHover={onHover} />
         </div>
       </div>
 
-      {/* Bottom row arrows — control bottom edge (down-adjacent face) */}
+      {/* Bottom row arrows — Z / X */}
       <div className="flex gap-1">
-        <ArrowBtn move={bottom.neg} label="←" onMove={onMove} onHover={onHover} />
-        <ArrowBtn move={bottom.pos} label="→" onMove={onMove} onHover={onHover} />
+        <ArrowBtn move={bottom.neg} label="←" keyHint="Z" onMove={onMove} onHover={onHover} />
+        <ArrowBtn move={bottom.pos} label="→" keyHint="X" onMove={onMove} onHover={onHover} />
       </div>
 
-      <p className="text-[8px] font-mono text-white/15 mt-1 tracking-widest">
-        drag cube to see other faces
+      <p className="text-[10px] font-mono text-white/40 mt-1 tracking-widest">
+        drag to rotate
       </p>
     </div>
   )
