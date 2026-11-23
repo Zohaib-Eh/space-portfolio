@@ -30,7 +30,7 @@ function MediaItem({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="w-full h-full object-cover object-top"
+      className="w-full h-full object-contain"
       draggable={false}
     />
   )
@@ -89,7 +89,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="z-[151] w-full max-w-xl bg-[#0a0a18] border border-white/10 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
           >
             {/* Media area */}
-            <div className={`relative flex-shrink-0 overflow-hidden bg-black ${count === 0 && project.snippet ? 'h-72' : 'h-56'}`}>
+            <div className={`relative flex-shrink-0 overflow-hidden bg-black ${count === 0 && project.snippet ? 'h-72' : 'h-64'}`}>
               {count > 0 ? (
                 <>
                   <AnimatePresence initial={false} custom={dir} mode="popLayout">

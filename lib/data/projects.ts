@@ -83,20 +83,7 @@ export const projects: ProjectItem[] = [
     tags: ['Python', 'ROS 2', 'MoveIt 2', 'MuJoCo', 'Docker', 'React', 'three.js'],
     githubUrl: 'https://github.com/Zohaib-Eh/Bob-ROS',
     isHackathonWin: false,
-    snippet: {
-      filename: 'backend/app/ros/program_pkg.py',
-      code: `r = Robot()
-down = r.tool_down(yaw=0.0)          # jaws close along x
-r.release()
-r.move_to((0.5, 0.2, 0.15), down)
-r.move_line((0.5, 0.2, 0.02), down)  # fingertips at the box
-r.grip("box")                        # friction holds it
-r.move_line((0.5, 0.2, 0.15), down)
-r.move_to((0.4, -0.3, 0.15), down)
-r.move_line((0.4, -0.3, 0.025), down)
-r.release()
-(x, y, z), _ = r.pose("box")         # where it really landed`,
-    },
+    media: ['/projects/BobROS/app.jpg'],
   },
   {
     id: 'wayfarerr',
@@ -131,23 +118,6 @@ r.release()
     media: ['/projects/Medigraph/MG1.mp4'],
   },
   {
-    id: 'ripple',
-    title: 'Ripple',
-    description: 'A real-time cascade engine for London road disruptions, built solo for the Urban Operations track. A closure spreads through the road graph on the GPU, then joins to bus journeys, population, deprivation and nearby businesses, and a local vision model reads the nearest JamCam.',
-    category: 'aiml',
-    tags: ['Python', 'RAPIDS cuGraph', 'cuDF', 'Streamlit', 'TfL API', 'NVIDIA NIM'],
-    githubUrl: 'https://github.com/Zohaib-Eh/Ripple',
-    isHackathonWin: false,
-    hackathonAffiliate: 'Hack for Impact London',
-    snippet: {
-      filename: 'graph/cascade.py',
-      code: `def run_cascade(G: cugraph.Graph, start_node: int, max_depth: int = 15):
-    distances = cugraph.bfs(G, start_vertex=start_node)
-    affected = distances[distances["distance"] <= max_depth].copy()
-    return affected[["vertex", "distance"]].rename(columns={"vertex": "node"})`,
-    },
-  },
-  {
     id: 'hack-the-wallet',
     title: 'Hack the Wallet',
     description: 'Award-winning AI agent game using Gemini API and Starknet (Web3), enabling dynamic NPC interaction via natural language prompts and crypto rewards.',
@@ -171,33 +141,6 @@ r.release()
     isHackathonWin: false,
     hackathonAffiliate: 'Encode AI Hackathon',
     media: ['/projects/Carma/CM1.mp4'],
-  },
-  {
-    id: 'encode-spoon',
-    title: 'EncodeSpoonAI',
-    description: 'An Encode hackathon game on Neo. A SpoonAI graph writes a scenario, takes the player\'s answer and scores it. A NEP-17 game token takes the deposit, pays a bonus for each scenario and cashes out, and the contract keeps the history.',
-    category: 'blockchain',
-    tags: ['Python', 'SpoonAI', 'Neo', 'NEP-17', 'Jupyter'],
-    githubUrl: 'https://github.com/Zohaib-Eh/EncodeSpoonAI',
-    isHackathonWin: false,
-    hackathonAffiliate: 'Encode SpoonAI Hackathon',
-    snippet: {
-      filename: 'spoonOS/GameToken.py',
-      code: `@public
-def start_game(player: UInt160, deposit_amount: int) -> bool:
-    assert check_witness(player), 'Player authorization required'
-    assert deposit_amount > 0, 'Deposit must be positive'
-    game_active_val = get(GAME_ACTIVE_PREFIX + player)
-    game_active = game_active_val.to_bool() if game_active_val else False
-    assert not game_active, 'Game already active for this player'
-    player_balance = balanceOf(player)
-    assert player_balance >= deposit_amount, 'Insufficient balance'
-    put(GAME_ACTIVE_PREFIX + player, True)
-    put(GAME_DEPOSIT_PREFIX + player, deposit_amount)
-    put(GAME_EARNINGS_PREFIX + player, 0)
-    on_game_started(player, deposit_amount)
-    return True`,
-    },
   },
   {
     id: 'hypermint',
@@ -250,6 +193,7 @@ def start_game(player: UInt160, deposit_amount: int) -> bool:
     category: 'aiml',
     tags: ['HLS4ML', 'FPGA', 'Pruning', 'Quantisation'],
     isHackathonWin: false,
+    media: ['/projects/FPGA/thumb.png'],
   },
   {
     id: 'hri',
@@ -270,20 +214,7 @@ def start_game(player: UInt160, deposit_amount: int) -> bool:
     githubUrl: 'https://github.com/Zohaib-Eh/Hack23-GoFish',
     isHackathonWin: true,
     hackathonLabel: 'Royal Hackaway V6 — 3rd Place',
-    snippet: {
-      filename: 'fishgo.py',
-      code: `@bot.command(name="feed", help="moves the servo to feed the fish")
-async def feedfish(ctx, freq):
-    await ctx.channel.send("feeding time has begun, feeding")
-    Servo.feeding_time(int(freq))
-    await ctx.channel.send("feeding time has come to an end")
-
-@bot.command(name="light", help="toggles the lights")
-async def flashbang(ctx):
-    x = Servo.flashbang()
-    if x.status_code == 200:
-        await ctx.channel.send("flash bang out!")`,
-    },
+    media: ['/projects/GoFishTank/thumb.png'],
   },
   {
     id: 'loneliness',
@@ -293,17 +224,7 @@ async def flashbang(ctx):
     tags: ['Python', 'scikit-learn', 'Google Cloud NLP', 'Jupyter'],
     githubUrl: 'https://github.com/Zohaib-Eh/LSEA',
     isHackathonWin: false,
-    snippet: {
-      filename: 'pre-processing.ipynb',
-      code: `df = pd.read_excel("Whatisloneliness060321.xlsx")
-df = df[df["Q9_Loneliness_Meaning_Qual"] != -99]
-df = df[df["Q9_Loneliness_Meaning_Qual"].notna()]
-df = df[df["UCLA3itemscale"].notna()]
-_input = df["Q9_Loneliness_Meaning_Qual"]
-_input = _input.apply(lcf.remove_stopwords)
-_input = _input.apply(lcf.clean_text)
-_target = df["UCLA3itemscale"]`,
-    },
+    media: ['/projects/Loneliness/thumb.png'],
   },
   {
     id: 'signly',
@@ -312,6 +233,7 @@ _target = df["UCLA3itemscale"]`,
     category: 'fullstack',
     tags: ['Django', 'JavaScript'],
     isHackathonWin: false,
+    media: ['/projects/Signly/thumb.png'],
   },
   {
     id: 'home-monitor',
@@ -320,6 +242,7 @@ _target = df["UCLA3itemscale"]`,
     category: 'robotics',
     tags: ['C', 'PIC', 'Embedded'],
     isHackathonWin: false,
+    media: ['/projects/HomeMonitor/thumb.png'],
   },
   {
     id: 'banking-suite',
@@ -328,6 +251,7 @@ _target = df["UCLA3itemscale"]`,
     category: 'fullstack',
     tags: ['Java', 'Swing', 'UML', 'OOP'],
     isHackathonWin: false,
+    media: ['/projects/Banking/thumb.png'],
   },
   {
     id: 'object-retriever',
@@ -336,6 +260,7 @@ _target = df["UCLA3itemscale"]`,
     category: 'robotics',
     tags: ['Arduino', 'Ultrasonic', 'Motors'],
     isHackathonWin: false,
+    media: ['/projects/Retriever/thumb.png'],
   },
   {
     id: 'buzzer-labview',
@@ -344,5 +269,6 @@ _target = df["UCLA3itemscale"]`,
     category: 'robotics',
     tags: ['Raspberry Pi Pico', 'LabVIEW'],
     isHackathonWin: false,
+    media: ['/projects/Buzzer/thumb.png'],
   },
 ]
