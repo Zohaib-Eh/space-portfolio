@@ -13,6 +13,7 @@ const tabs: { value: FilterValue; label: string }[] = [
   { value: 'aiml', label: 'AI · ML' },
   { value: 'blockchain', label: 'Blockchain' },
   { value: 'robotics', label: 'Robotics' },
+  { value: 'fullstack', label: 'Full-Stack' },
 ]
 
 export function CategoryFilter({ active, onChange }: CategoryFilterProps) {
